@@ -2,10 +2,6 @@
 
 require_once __DIR__ . "\\..\\..\\constants\\constants.php";
 
-// echo __DIR__ . "\\..\\..\\constants\\constants.php";
-
-// exit(1);
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
