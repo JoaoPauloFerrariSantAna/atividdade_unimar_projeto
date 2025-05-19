@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "\\..\\..\\constants\\constants.php";
+require_once __DIR__ . "/../../constants/constants.php";
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
