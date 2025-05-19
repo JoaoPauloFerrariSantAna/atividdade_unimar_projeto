@@ -1,6 +1,20 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\DepartamentController;
 
-Route::get("/departaments", array(DepartamentController::class, "getAllDepartaments"));
+# region Departaments
+
+Route::get("/departament", array(DepartamentController::class, "getAllDepartaments"));
+Route::get("/departament/{id}", array(DepartamentController::class, "getDepartament"));
+Route::post("/departament", array(DepartamentController::class, "postDepartament"));
+
+# endregion Departaments
+
+# region Workers
+
+
+Route::get("/worker", array(WorkerController
+
+# endregion Workers
