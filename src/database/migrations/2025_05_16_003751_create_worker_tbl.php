@@ -14,9 +14,8 @@ return new class extends Migration
             $table->id();
             $table->string("name", DEFAULT_NAME_SIZE)->nullable(false);
             $table->double("salary")->nullable(false)->default(150.75);
-            $table->dateTime("contract_start")->nullable(false)->default(date("Y-m-d H:i:s"));
-            $table->dateTime("contract_end");
-            $table->foreignId("departament_id");
+            $table->dateTime("contractStart")->nullable(false)->default(date("Y-m-d H:i:s"));
+            $table->dateTime("contractEnd");
             $table->timestamps();
         });
     }
