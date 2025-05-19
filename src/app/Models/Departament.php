@@ -8,7 +8,7 @@ use App\Models\Workers;
 class Departament extends Model
 {
     protected $table = "departament_tbl";
-    protected $fillable = array("name", "workerAmount", "worker_id");
+    protected $fillable = array("name", "workerAmount", "workerId");
 
     public function workers()
     {
