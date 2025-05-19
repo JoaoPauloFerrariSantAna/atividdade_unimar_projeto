@@ -33,6 +33,13 @@ class DepartamentController extends Controller
 				]
 			);
 		}
+
+		return response()->json(
+			[
+				"operation_status" => "200",
+				"savedData" => $departament
+			]
+		);
 	}
 
 	public function postDepartament(Request $req)
