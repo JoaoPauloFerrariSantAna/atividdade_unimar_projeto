@@ -14,7 +14,12 @@ class DepartamentController extends Controller
 
     public function getAllDepartaments()
 	{
-        return Departament::all();
+        return response()->json(
+			[
+				"operationStatus" => "200",
+				"savedData" => Departament::all()
+			]
+		);
     }
 
 	public function getDepartament(int $id)
@@ -29,7 +34,7 @@ class DepartamentController extends Controller
 			return response()->json(
 				[
 					"operation_status" => "500",
-					"msg" => "Could not find departament with id of '$id'"
+					"errorType" => $e->getMessage(),
 				]
 			);
 		}
