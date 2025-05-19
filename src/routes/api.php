@@ -14,7 +14,7 @@ Route::post("/departament", array(DepartamentController::class, "postDepartament
 
 # region Workers
 
-
-Route::get("/worker", array(WorkerController
+Route::get("/worker", array(WorkerController::class, "getWorkers"));
+Route::get("/worker/{id}", array(WorkerController::class, "getWorker"));
 
 # endregion Workers
