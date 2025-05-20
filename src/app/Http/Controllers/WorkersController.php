@@ -40,13 +40,14 @@ class WorkersController extends Controller
 
 	public function postWorker(Request $req)
 	{
-		// TODO: add error handling
+		# TODO: add error handling
 		$worker = new Workers();
 
 		$worker->name = $req->input("workerName", null);
 		$worker->salary = $req->input("workerSalary", 0.00);
 		$worker->contractStart = $req->input("workerStart", null);
 		$worker->contractEnd = $req->input("workerEnd", null);
+        $worker->departamentId = $req->input("departamentId", null);
 		$worker->save();
 
 		return response()->json(

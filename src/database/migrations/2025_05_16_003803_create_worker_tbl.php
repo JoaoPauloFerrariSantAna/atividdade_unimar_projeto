@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('worker_tbl', function (Blueprint $table) {
             $table->id();
             $table->string("name", DEFAULT_NAME_SIZE)->nullable(false);
-            $table->double("salary")->nullable(false)->default(150.75);
+            $table->double("salary")->nullable(false)->default(DEFAULT_SALARY);
             $table->foreignId("departamentId")->constrained()->references("id")->on("departament_tbl");
-            $table->dateTime("contractStart")->nullable(false)->default(date("Y-m-d H:i:s"));
+            $table->dateTime("contractStart")->nullable(false);
             $table->dateTime("contractEnd")->nullable(true);
             $table->timestamps();
         });

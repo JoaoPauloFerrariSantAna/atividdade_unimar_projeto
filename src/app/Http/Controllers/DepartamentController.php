@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Routing\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 use App\Models\Departament;
 use App\Models\Workers;
 
@@ -14,7 +14,6 @@ class DepartamentController extends Controller
     public function __construct() {}
 
 	# region Get
-
     public function getAllDepartaments()
 	{
         return response()->json(
@@ -52,29 +51,38 @@ class DepartamentController extends Controller
 
 	public function getWorkerDepartament(Request $req, int $workerId)
 	{
-		$workerId = Workers::find($workerId);
-		$departament = new Departament();
+		# sorry  but i can't work with the laravel functions, in this case
+		$query = DB::select(
+			"SELECT 
+				worker_tbl.name WORKER_NAME, 
+				worker_tbl.salary WORKER_SALARY, 
+				departament_tbl.name DEPT_NAME 
+			FROM 
+				worker_tbl
+			INNER JOIN
+				departament_tbl
+			ON
+				departament_tbl.id = worker_tbl.departamentId
+			WHERE
+				departament_tbl.id = $workerId;
+			");
 
         return response()->json(
 			[
 				"operationStatus" => 200,
-				"savedData" => $departament->workers()->associate($workerId)
+				"savedData" => $query
 			]
 		);
 	}
-
 	# endregion Get
-
 	# region Post
-
 	public function postDepartament(Request $req)
 	{
-		// TODO: add error handling
+		# TODO: add error handling
 		$departament = new Departament();
 
 		$departament->name = $req->input("departamentName", null);
 		$departament->workerAmount = $req->input("departamentWorkers", 1);
-		$departament->workerId = $req->input("workerId", null);
 		$departament->save();
 
 		return response()->json(
@@ -84,11 +92,8 @@ class DepartamentController extends Controller
 			]
 		);
 	}
-
 	# endregion Post
-
 	# region Patch
-
 	public function patchDepartament(Request $req, int $id)
 	{
 		$departament = null;
@@ -128,6 +133,5 @@ class DepartamentController extends Controller
 			]
 		);
 	}
-
 	# endregion Patch
 }

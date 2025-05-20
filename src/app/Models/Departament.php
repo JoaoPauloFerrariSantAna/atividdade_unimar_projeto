@@ -8,10 +8,10 @@ use App\Models\Workers;
 class Departament extends Model
 {
     protected $table = "departament_tbl";
-    protected $fillable = array("name", "workerAmount", "workerId");
+    protected $fillable = array("name", "workerAmount");
 
     public function workers()
     {
-        return $this->hasMany("worker_id", Workers::class);
+        return $this->hasMany(Workers::class);
     }
 }
