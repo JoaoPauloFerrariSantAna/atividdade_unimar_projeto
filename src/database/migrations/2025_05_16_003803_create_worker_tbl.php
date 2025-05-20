@@ -10,12 +10,14 @@ return new class extends Migration
 {
     public function up(): void
     {
+        Schema::dropIfExists('worker_tbl');
         Schema::create('worker_tbl', function (Blueprint $table) {
             $table->id();
             $table->string("name", DEFAULT_NAME_SIZE)->nullable(false);
             $table->double("salary")->nullable(false)->default(150.75);
+            $table->foreignId("departamentId")->constrained()->references("id")->on("departament_tbl");
             $table->dateTime("contractStart")->nullable(false)->default(date("Y-m-d H:i:s"));
-            $table->dateTime("contractEnd");
+            $table->dateTime("contractEnd")->nullable(true);
             $table->timestamps();
         });
     }
