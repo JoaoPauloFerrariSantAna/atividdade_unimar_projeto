@@ -24,7 +24,7 @@ class WorkersController extends Controller
 		{
 			return response()->json(
 				[
-					"operation_status" => "500",
+					"operationStatus" => 500,
 					"errorType" => $e->getMessage(),
 				]
 			);
@@ -32,7 +32,7 @@ class WorkersController extends Controller
 
 		return response()->json(
 			[
-				"operation_status" => "200",
+				"operationStatus" => 200,
 				"savedData" => $worker
 			]
 		);
@@ -51,7 +51,7 @@ class WorkersController extends Controller
 
 		return response()->json(
 			[
-				"operation_status" => "200",
+				"operationStatus" => 200,
 				"savedData" => $worker
 			]
 		);
@@ -67,8 +67,8 @@ class WorkersController extends Controller
 		# 'cause it is way to specific to be here
 		# like it should be, the route, be "/worker/{id}/setTerminationDate
 		# maybe i'll add this another time, yes?
-		$new_name = $req->input("newName", null);
-		$new_salary = $req->input("newSalary", null);
+		$newName = $req->input("newName", null);
+		$newSalary = $req->input("newSalary", null);
 
 		try
 		{
@@ -77,27 +77,27 @@ class WorkersController extends Controller
 		{
 			return response()->json(
 				[
-					"operation_status" => "500",
+					"operationStatus" => 500,
 					"errorType" => $e->getMessage(),
 				]
 			);
 		}
 
-		if(!is_null($new_name))
+		if(!is_null($newName))
 		{
-			$worker->name = $new_name;
+			$worker->name = $newName;
 		}
 
-		if(!is_null($new_salary))
+		if(!is_null($newSalary))
 		{
-			$worker->salary = $new_salary;
+			$worker->salary = $newSalary;
 		}
 
 		$worker->save();
 
 		return response()->json(
 			[
-				"operation_status" => "200",
+				"operationStatus" => 200,
 				"savedData" => $worker
 			]
 		);
