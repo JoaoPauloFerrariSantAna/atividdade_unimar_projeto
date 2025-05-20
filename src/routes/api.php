@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\DepartamentController;
+use App\Http\Controllers\WorkersController;
+
+# TODO: group it
 
 # region Departaments
 
@@ -14,7 +17,8 @@ Route::post("/departament", array(DepartamentController::class, "postDepartament
 
 # region Workers
 
-Route::get("/worker", array(WorkerController::class, "getWorkers"));
-Route::get("/worker/{id}", array(WorkerController::class, "getWorker"));
+Route::get("/worker", array(WorkersController::class, "getAllWorkers"));
+Route::get("/worker/{id}", array(WorkersController::class, "getWorker"));
+Route::post("/worker", array(WorkersController::class, "postWorker"));
 
 # endregion Workers
