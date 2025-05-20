@@ -10,7 +10,7 @@ class Departament extends Model
     protected $table = "departament_tbl";
     protected $fillable = array("name", "workerAmount");
 
-    public function workers()
+    public function workers(): HasMany
     {
         return $this->hasMany(Workers::class);
     }

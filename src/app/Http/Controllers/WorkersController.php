@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 use App\Models\Workers;
@@ -11,9 +12,13 @@ class WorkersController extends Controller
 {
     public function __construct() {}
 
-    public function getAllWorkers() { return Workers::all(); }
+    public function getAllWorkers(): JsonResponse
+	{
+		return new JsonResponse( status: 200, data: [ Worker::all() ] );
+		
+	}
 
-	public function getWorker(int $id)
+	public function getWorker(int $id): JsonResponse
 	{
 		$worker = null;
 
@@ -22,23 +27,13 @@ class WorkersController extends Controller
 			$worker = Workers::findOrFail($id);
 		} catch(ModelNotFoundException $e)
 		{
-			return response()->json(
-				[
-					"operationStatus" => 500,
-					"errorType" => $e->getMessage(),
-				]
-			);
+			return JsonResponse( status: 500, data: [ $e->getMessage() ] );
 		}
 
-		return response()->json(
-			[
-				"operationStatus" => 200,
-				"savedData" => $worker
-			]
-		);
+		return JsonResponse( status: 200, data: [ $worker ] );
 	}
 
-	public function postWorker(Request $req)
+	public function postWorker(Request $req): JsonResponse
 	{
 		# TODO: add error handling
 		$worker = new Workers();
@@ -50,15 +45,10 @@ class WorkersController extends Controller
         $worker->departamentId = $req->input("departamentId", null);
 		$worker->save();
 
-		return response()->json(
-			[
-				"operationStatus" => 200,
-				"savedData" => $worker
-			]
-		);
+		return JsonResponse( status: 200, data: [ $worker ] );
 	}
 
-	public function patchWorker(Request $req, int $id)
+	public function patchWorker(Request $req, int $id): JsonResponse
 	{
 		$worker = null;
 
@@ -76,12 +66,7 @@ class WorkersController extends Controller
 			$worker = Workers::findOrFail($id);
 		} catch(ModelNotFoundException $e)
 		{
-			return response()->json(
-				[
-					"operationStatus" => 500,
-					"errorType" => $e->getMessage(),
-				]
-			);
+			return new JsonResponse( status: 500, data: [ $e->getMessage() ] );
 		}
 
 		if(!is_null($newName))
@@ -96,12 +81,6 @@ class WorkersController extends Controller
 
 		$worker->save();
 
-		return response()->json(
-			[
-				"operationStatus" => 200,
-				"savedData" => $worker
-			]
-		);
-
+		return new JsonResponse( status: 200, data: [ $worker ] );
 	}
 }

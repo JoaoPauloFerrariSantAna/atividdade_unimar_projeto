@@ -10,7 +10,7 @@ class Workers extends Model
     protected $table = "worker_tbl";
     protected $fillable = array("name", "salary", "contractStart", "contractEnd", "departamentId");
 
-    public function departament()
+    public function departament(): HasOne
     {
         return $this->hasOne("departamentId", Departament::class);
     }

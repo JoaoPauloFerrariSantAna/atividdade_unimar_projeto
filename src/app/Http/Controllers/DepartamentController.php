@@ -13,18 +13,12 @@ class DepartamentController extends Controller
 {
     public function __construct() {}
 
-	# region Get
-    public function getAllDepartaments()
+    public function getAllDepartaments(): JsonResponse
 	{
-        return response()->json(
-			[
-				"operationStatus" => 200,
-				"savedData" => Departament::all()
-			]
-		);
+        return response()->json( status: 200, data: [ Departament::all() ] );
     }
 
-	public function getDepartament(int $id)
+	public function getDepartament(int $id): JsonResponse
 	{
 		$departament = null;
 
@@ -33,23 +27,13 @@ class DepartamentController extends Controller
 			$departament = Departament::findOrFail($id);
 		} catch(ModelNotFoundException $e)
 		{
-			return response()->json(
-				[
-					"operationStatus" => 500,
-					"errorType" => $e->getMessage(),
-				]
-			);
+			return JsonResponse( status: 500, data: [ $e->getMessage() ] );
 		}
 
-		return response()->json(
-			[
-				"operationStatus" => 200,
-				"savedData" => $departament
-			]
-		);
+		return JsonResponse( status: 200, data: [ $departament ] );
 	}
 
-	public function getWorkerDepartament(Request $req, int $workerId)
+	public function getWorkerDepartament(Request $req, int $workerId): JsonResponse
 	{
 		# sorry  but i can't work with the laravel functions, in this case
 		$query = DB::select(
@@ -67,16 +51,10 @@ class DepartamentController extends Controller
 				departament_tbl.id = $workerId;
 			");
 
-        return response()->json(
-			[
-				"operationStatus" => 200,
-				"savedData" => $query
-			]
-		);
+        return JsonResponse( status: 200, data: [ $query ] );
 	}
-	# endregion Get
-	# region Post
-	public function postDepartament(Request $req)
+
+	public function postDepartament(Request $req): JsonResponse
 	{
 		# TODO: add error handling
 		$departament = new Departament();
@@ -85,16 +63,10 @@ class DepartamentController extends Controller
 		$departament->workerAmount = $req->input("departamentWorkers", 1);
 		$departament->save();
 
-		return response()->json(
-			[
-				"operationStatus" => 200,
-				"savedData" => $departament
-			]
-		);
+		return JsonResponse( status: 200, data: [ $departament ] );
 	}
-	# endregion Post
-	# region Patch
-	public function patchDepartament(Request $req, int $id)
+
+	public function patchDepartament(Request $req, int $id): JsonResponse
 	{
 		$departament = null;
 
@@ -106,12 +78,7 @@ class DepartamentController extends Controller
 			$departament = Departament::findOrFail($id);
 		} catch(ModelNotFoundException $e)
 		{
-			return response()->json(
-				[
-					"operationStatus" => 500,
-					"errorType" => $e->getMessage(),
-				]
-			);
+			return JsonResponse( status: 500, data: [ $e->getMessage() ] );
 		}
 
 		if(!is_null($newName))
@@ -126,12 +93,6 @@ class DepartamentController extends Controller
 
 		$departament->save();
 
-		return response()->json(
-			[
-				"operationStatus" => 200,
-				"savedData" => $departament
-			]
-		);
+		return JsonResponse( status: 200, data: [ $departament ] );
 	}
-	# endregion Patch
 }
