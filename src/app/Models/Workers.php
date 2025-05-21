@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\Departament;
 
 class Workers extends Model
@@ -12,6 +13,6 @@ class Workers extends Model
 
     public function departament(): HasOne
     {
-        return $this->hasOne("departamentId", Departament::class);
+        return $this->hasOne(Departament::class);
     }
 }
