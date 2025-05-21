@@ -27,10 +27,10 @@ class WorkersController extends Controller
 			$worker = Workers::findOrFail($id);
 		} catch(ModelNotFoundException $e)
 		{
-			return JsonResponse( status: 500, data: [ $e->getMessage() ] );
+			return new JsonResponse( status: 500, data: [ $e->getMessage() ] );
 		}
 
-		return JsonResponse( status: 200, data: [ $worker ] );
+		return new JsonResponse( status: 200, data: [ $worker ] );
 	}
 
 	public function postWorker(Request $req): JsonResponse
@@ -45,7 +45,7 @@ class WorkersController extends Controller
         $worker->departamentId = $req->input("departamentId", null);
 		$worker->save();
 
-		return JsonResponse( status: 200, data: [ $worker ] );
+		return new JsonResponse( status: 200, data: [ $worker ] );
 	}
 
 	public function patchWorker(Request $req, int $id): JsonResponse

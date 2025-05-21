@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\Departament;
 use App\Models\Workers;
@@ -15,7 +16,7 @@ class DepartamentController extends Controller
 
     public function getAllDepartaments(): JsonResponse
 	{
-        return response()->json( status: 200, data: [ Departament::all() ] );
+        return new JsonResponse( status: 200, data: [ Departament::all() ] );
     }
 
 	public function getDepartament(int $id): JsonResponse
@@ -27,10 +28,10 @@ class DepartamentController extends Controller
 			$departament = Departament::findOrFail($id);
 		} catch(ModelNotFoundException $e)
 		{
-			return JsonResponse( status: 500, data: [ $e->getMessage() ] );
+			return new JsonResponse( status: 500, data: [ $e->getMessage() ] );
 		}
 
-		return JsonResponse( status: 200, data: [ $departament ] );
+		return new JsonResponse( status: 200, data: [ $departament ] );
 	}
 
 	public function getWorkerDepartament(Request $req, int $workerId): JsonResponse
@@ -51,7 +52,7 @@ class DepartamentController extends Controller
 				departament_tbl.id = $workerId;
 			");
 
-        return JsonResponse( status: 200, data: [ $query ] );
+        return new JsonResponse( status: 200, data: [ $query ] );
 	}
 
 	public function postDepartament(Request $req): JsonResponse
@@ -63,7 +64,7 @@ class DepartamentController extends Controller
 		$departament->workerAmount = $req->input("departamentWorkers", 1);
 		$departament->save();
 
-		return JsonResponse( status: 200, data: [ $departament ] );
+		return new JsonResponse( status: 200, data: [ $departament ] );
 	}
 
 	public function patchDepartament(Request $req, int $id): JsonResponse
@@ -78,7 +79,7 @@ class DepartamentController extends Controller
 			$departament = Departament::findOrFail($id);
 		} catch(ModelNotFoundException $e)
 		{
-			return JsonResponse( status: 500, data: [ $e->getMessage() ] );
+			return new JsonResponse( status: 500, data: [ $e->getMessage() ] );
 		}
 
 		if(!is_null($newName))
@@ -93,6 +94,6 @@ class DepartamentController extends Controller
 
 		$departament->save();
 
-		return JsonResponse( status: 200, data: [ $departament ] );
+		return new JsonResponse( status: 200, data: [ $departament ] );
 	}
 }
