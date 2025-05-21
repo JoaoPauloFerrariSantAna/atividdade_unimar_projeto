@@ -14,7 +14,7 @@ class WorkersController extends Controller
 
     public function getAllWorkers(): JsonResponse
 	{
-		return new JsonResponse( status: 200, data: [ Worker::all() ] );
+		return new JsonResponse(status: 200, data: [Worker::all()]);
 		
 	}
 
@@ -27,10 +27,10 @@ class WorkersController extends Controller
 			$worker = Workers::findOrFail($id);
 		} catch(ModelNotFoundException $e)
 		{
-			return new JsonResponse( status: 500, data: [ $e->getMessage() ] );
+			return new JsonResponse(status: 500, data: [$e->getMessage()]);
 		}
 
-		return new JsonResponse( status: 200, data: [ $worker ] );
+		return new JsonResponse(status: 200, data: [$worker]);
 	}
 
 	public function postWorker(Request $req): JsonResponse
@@ -39,13 +39,13 @@ class WorkersController extends Controller
 		$worker = new Workers();
 
 		$worker->name = $req->input("workerName", null);
-		$worker->salary = $req->input("workerSalary", 0.00);
+		$worker->salary = $req->input("workerSalary");
 		$worker->contractStart = $req->input("workerStart", null);
-		$worker->contractEnd = $req->input("workerEnd", null);
+		$worker->contractEnd = $req->input("workerEnd");
         $worker->departamentId = $req->input("departamentId", null);
 		$worker->save();
 
-		return new JsonResponse( status: 200, data: [ $worker ] );
+		return new JsonResponse(status: 200, data: [$worker]);
 	}
 
 	public function patchWorker(Request $req, int $id): JsonResponse
@@ -59,14 +59,14 @@ class WorkersController extends Controller
 		# like it should be, the route, be "/worker/{id}/setTerminationDate
 		# maybe i'll add this another time, yes?
 		$newName = $req->input("newName", null);
-		$newSalary = $req->input("newSalary", null);
+		$newSalary = $req->input("newSalary");
 
 		try
 		{
 			$worker = Workers::findOrFail($id);
 		} catch(ModelNotFoundException $e)
 		{
-			return new JsonResponse( status: 500, data: [ $e->getMessage() ] );
+			return new JsonResponse(status: 500, data: [$e->getMessage()]);
 		}
 
 		if(!is_null($newName))
@@ -81,6 +81,34 @@ class WorkersController extends Controller
 
 		$worker->save();
 
-		return new JsonResponse( status: 200, data: [ $worker ] );
+		return new JsonResponse(status: 200, data: [$worker]);
+	}
+
+	public function deleteWorker(int $id)
+	{
+		# in this case, we can ignore the try catch 'cause then
+		# if we are looking to delete a dept, we can assume 
+		# that it already exists
+		# so we do not need to find or throw an error
+		# we may... just find it
+		# this is assuming, of course, if we had an front-end
+		# and we could limit what the user sees, but since we are
+		# not in this scenario yet, i'll leave the try catch be
+
+		$worker = null;
+
+		try
+		{
+			$worker = Workers::findOrFail($id);
+		} catch(ModelNotFoundException $e)
+		{
+			return new JsonResponse(status: 500, data: [$e->getMessage()]);
+		}
+
+		# TODO: the thing is: if we delete with cascade, we'll lose every worker
+		# how to fix that...?
+		$worker->delete();
+
+		return new JsonResponse(status: 200, data: [$worker]);
 	}
 }
