@@ -49,6 +49,7 @@ class DepartamentController extends Controller
 			ON
 				departament_tbl.id = worker_tbl.departamentId
 			WHERE
+				-- filter what has been gathered up there
 				departament_tbl.id = $workerId;
 			");
 
@@ -93,6 +94,33 @@ class DepartamentController extends Controller
 		}
 
 		$departament->save();
+
+		return new JsonResponse( status: 200, data: [ $departament ] );
+	}
+
+	public function deleteDepartament(Request $req, int $id)
+	{
+		# in this case, we can ignore the try catch 'cause then
+		# if we are looking to delete a dept, we can assume 
+		# that it already exists
+		# so we do not need to find or throw an error
+		# we may... just find it
+		# this is assuming, of course, if we had an front-end
+		# and we could limit what the user sees, but since we are
+		# not in this scenario yet, i'll leave the try catch be
+		$departament = null;
+
+		try
+		{
+			$departament = Departament::findOrFail($id);
+		} catch(ModelNotFoundException $e)
+		{
+			return new JsonResponse( status: 500, data: [ $e->getMessage() ] );
+		}
+
+		# TODO: the thing is: if we delete with cascade, we'll lose every worker
+		# how to fix that...?
+		$departament->delete();
 
 		return new JsonResponse( status: 200, data: [ $departament ] );
 	}
