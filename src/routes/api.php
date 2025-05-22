@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\DepartamentController;
 use App\Http\Controllers\WorkersController;
 
@@ -14,9 +13,10 @@ Route::controller(DepartamentController::class)->group(function() {
 	Route::post("/departament", "postDepartament");
 });
 
-# TODO: group it
-
-Route::get("/worker/{id}", array(WorkersController::class, "getWorker"));
-Route::patch("/worker/{id}", array(WorkersController::class, "patchWorker"));
-Route::get("/worker", array(WorkersController::class, "getAllWorkers"));
-Route::post("/worker", array(WorkersController::class, "postWorker"));
+Route::controller(WorkersController::class)->group(function() {
+	Route::get("/worker/{id}", "getWorker");
+	Route::patch("/worker/{id}", "patchWorker");
+	Route::delete("/worker/{id}", "deleteWorker");
+	Route::get("/worker", "getAllWorkers");
+	Route::post("/worker", "postWorker");
+});
