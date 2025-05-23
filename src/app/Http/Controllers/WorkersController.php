@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -31,6 +32,30 @@ class WorkersController extends Controller
 		}
 
 		return new JsonResponse(status: 200, data: [$worker]);
+	}
+
+	public function getWorkerDepartament(int $deptId)
+	{
+		# instead of using worker_tbl as the middle table
+		# we'll be using departament_tbl
+		# as the middle table
+		# and then we will filter using the deptId from worker_tbl
+		# this is essentially the inverse from Departament::getWorkerDepartament
+		$query = DB::select("
+			SELECT
+				worker_tbl.name WORKER_NAME,
+				departament_tbl.name DEPT_NAME
+			FROM
+				departament_tbl
+			INNER JOIN
+				worker_tbl
+			ON
+				worker_tbl.departamentId = departament_tbl.id
+			WHERE
+				worker_tbl.departamentId = $deptId
+		");
+
+		return new JsonResponse( status: 200, data: [ $query ] );
 	}
 
 	public function postWorker(Request $req): JsonResponse
