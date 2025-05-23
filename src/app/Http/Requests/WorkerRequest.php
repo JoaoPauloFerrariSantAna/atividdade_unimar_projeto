@@ -1,8 +1,9 @@
 <?php
 
+namespace App\Http\Requests;
+
 require_once __DIR__ . "/../../../constants/constants.php";
 
-namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -17,10 +18,10 @@ class WorkerRequest extends FormRequest
     public function rules(): array
     {
         return [
-			"name" => [ "required", "max:".DEFAULT_NAME_SIZE ],
-			"salary" => [ "required", "decimal:4" ],
-			"contractStart" => [ "required", Rule::date()->format("y-m-d") ]
-			"contractEnd" => [ Rule::date()->format("y-m-d") ]
+			"name" => "required|max:".DEFAULT_NAME_SIZE,
+			"salary" => "required|decimal:4",
+			"contractStart" => [ "required", Rule::date()->format("y-m-d") ],
+			"contractEnd" => Rule::date()->format("y-m-d")
         ];
     }
 }

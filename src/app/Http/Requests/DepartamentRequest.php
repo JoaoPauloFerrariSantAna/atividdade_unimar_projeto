@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . "/../../../constants/constants.php";
-
 namespace App\Http\Requests;
+
+require_once __DIR__ . "/../../../constants/constants.php";
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -16,8 +16,8 @@ class DepartamentRequest extends FormRequest
     public function rules(): array
     {
         return [
-			"name" => [ "required", "max:".DEFAULT_DEPT_NAME_SIZE ],
-			"workerAmount" => [ "required" ]
+			"name" => "required|string|max:".DEFAULT_DEPT_NAME_SIZE,
+			"workerAmount" => "required|integer"
         ];
     }
 }
