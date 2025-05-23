@@ -13,7 +13,7 @@ return new class extends Migration
         Schema::dropIfExists('worker_tbl');
         Schema::create('worker_tbl', function (Blueprint $table) {
             $table->id();
-            $table->string("name", DEFAULT_NAME_SIZE)->nullable(false);
+            $table->string("name", NAME_LENGTH_WORKER)->nullable(false);
             $table->double("salary")->nullable(false)->default(DEFAULT_SALARY);
 
 			# NOTE: from what i could think of:

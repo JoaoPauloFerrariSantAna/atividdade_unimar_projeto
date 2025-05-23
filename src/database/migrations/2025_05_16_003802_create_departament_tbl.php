@@ -12,7 +12,7 @@ return new class extends Migration
     {
         Schema::create('departament_tbl', function (Blueprint $table) {
             $table->id();
-            $table->string("name", DEFAULT_NAME_SIZE)->nullable(false);
+            $table->string("name", NAME_LENGTH_DEPT)->nullable(false);
             $table->integer("workerAmount")->nullable(false);
             $table->timestamps();
         });

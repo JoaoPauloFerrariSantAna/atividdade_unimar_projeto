@@ -14,6 +14,8 @@ Route::controller(DepartamentController::class)->group(function() {
 });
 
 Route::controller(WorkersController::class)->group(function() {
+	# TODO: think of better name for this route's method
+	Route::get("/worker/departament/{deptId}", "getWorkerDepartament")
 	Route::get("/worker/{id}", "getWorker");
 	Route::patch("/worker/{id}", "patchWorker");
 	Route::delete("/worker/{id}", "deleteWorker");

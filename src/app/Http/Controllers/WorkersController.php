@@ -38,11 +38,11 @@ class WorkersController extends Controller
 		# TODO: add error handling
 		$worker = new Workers();
 
-		$worker->name = $req->input("workerName", null);
-		$worker->salary = $req->input("workerSalary");
-		$worker->contractStart = $req->input("workerStart", null);
-		$worker->contractEnd = $req->input("workerEnd");
-        $worker->departamentId = $req->input("departamentId", null);
+		$worker->name = $req->input("eeName", null);
+		$worker->salary = $req->input("eeSalary");
+		$worker->contractStart = $req->input("eeStart", null);
+		$worker->contractEnd = $req->input("eeEnd");
+        $worker->departamentId = $req->input("deptId", null);
 		$worker->save();
 
 		return new JsonResponse(status: 200, data: [$worker]);

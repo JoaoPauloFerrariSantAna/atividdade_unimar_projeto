@@ -61,8 +61,8 @@ class DepartamentController extends Controller
 		# TODO: add error handling
 		$departament = new Departament();
 
-		$departament->name = $req->input("departamentName", null);
-		$departament->workerAmount = $req->input("departamentWorkers", 1);
+		$departament->name = $req->input("deptName", null);
+		$departament->workerAmount = $req->input("deptWorkers", 1);
 		$departament->save();
 
 		return new JsonResponse( status: 200, data: [ $departament ] );
@@ -72,8 +72,8 @@ class DepartamentController extends Controller
 	{
 		$departament = null;
 
-		$newName = $req->input("newDepartamentName", null);
-		$newWorkerAmount = $req->input("newAmpuntWorkers", 1);
+		$newName = $req->input("deptName", null);
+		$newWorkerAmount = $req->input("eeAmount", 1);
 
 		try
 		{
