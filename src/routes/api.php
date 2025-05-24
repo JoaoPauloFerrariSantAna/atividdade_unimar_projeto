@@ -19,6 +19,6 @@ Route::controller(WorkersController::class)->group(function() {
 	Route::get("/worker/{id}", "getWorker");
 	Route::patch("/worker/{id}", "patchWorker");
 	Route::delete("/worker/{id}", "deleteWorker");
-	Route::get("/worker", "getAllWorkers");
+	Route::get("/worker", "getWorkers");
 	Route::post("/worker", "postWorker");
 });

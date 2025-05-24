@@ -12,7 +12,7 @@ use App\Models\Workers;
 class WorkersController extends Controller {
     public function __construct() {}
 
-    public function getAllWorkers(): JsonResponse {
+    public function getWorkers(): JsonResponse {
 		return new JsonResponse(status: 200, data: [Worker::all()]);
 		
 	}

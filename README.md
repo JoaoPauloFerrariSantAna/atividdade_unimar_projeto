@@ -2,6 +2,8 @@
 
 ## Conclusões sobre o projeto
 
+Eu gostei de experimentar Laravel.
+
 ## Ferramentas Utilizadas
 
 - PHP
